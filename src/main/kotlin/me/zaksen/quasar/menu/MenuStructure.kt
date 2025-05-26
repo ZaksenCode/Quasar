@@ -30,7 +30,7 @@ interface MenuStructure {
     fun update(special: GuiElement? = null)
 
     /** Close menu for given viewer, if viewer is not given, close menu for all viewers. */
-    fun close(closeFor: Player?)
+    fun close(closeFor: Player? = null)
 
     /** Update menu title */
     fun setTitle(title: Component)

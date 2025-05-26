@@ -1,11 +1,13 @@
 package me.zaksen.quasar.menu.controller
 
 import me.zaksen.quasar.menu.MenuStructure
+import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
 import net.minestom.server.event.Event
 import net.minestom.server.event.EventNode
 import net.minestom.server.event.inventory.InventoryCloseEvent
 import net.minestom.server.event.inventory.InventoryPreClickEvent
+import net.minestom.server.event.player.PlayerDisconnectEvent
 import java.util.UUID
 
 /**
@@ -15,14 +17,24 @@ import java.util.UUID
 object MenuController {
     private val structureByPlayer: MutableMap<UUID, MenuStructure> = mutableMapOf()
 
-    fun initHandlers(node: EventNode<Event>) {
+    /** Add default listeners for passed node, that controller may process logic
+     * @param node - where events are processed. In most cases probably will be `MinecraftServer.getGlobalEventHandler()`
+     * @see MinecraftServer
+     * */
+    fun initHandlers(node: EventNode<Event> = MinecraftServer.getGlobalEventHandler()) {
+        // Process clicking
         node.addListener(InventoryPreClickEvent::class.java) { event ->
             structureByPlayer[event.entity.uuid]?.processClick(event)
         }
+        // Process menu closing (or not closing)
         node.addListener(InventoryCloseEvent::class.java) { event ->
             val menu = structureByPlayer[event.entity.uuid] ?: return@addListener
             if(!menu.allowClose()) menu.cancelClose(event)
             else structureByPlayer.remove(event.player.uuid)
+        }
+        // Process menu removing, when player disconnect
+        node.addListener(PlayerDisconnectEvent::class.java) { event ->
+            structureByPlayer.remove(event.player.uuid)
         }
     }
 
