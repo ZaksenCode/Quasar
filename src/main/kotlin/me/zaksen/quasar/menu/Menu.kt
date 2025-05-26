@@ -13,7 +13,6 @@ import net.minestom.server.inventory.Inventory
 import net.minestom.server.item.ItemStack
 import java.util.function.Consumer
 
-// TODO - Add display rebuild processing
 open class Menu(private val type: MenuType, private val allowClose: Boolean = true): MenuStructure {
 
     constructor(width: Int, height: Int, allowClose: Boolean = true) : this(MenuType.bySize(width, height), allowClose)
