@@ -4,4 +4,4 @@
 The goal of this repository is to simplify and speed up development for myself. However, if someone wants to use something from this set, I have no objections.
 
 # Features
-- Menu's and menu element's (Simple menu and elements creation).
+- [Menu's and menu element's](https://github.com/ZaksenCode/Quasar/wiki/Menus) (Simple menu and elements creation).
