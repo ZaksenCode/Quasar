@@ -9,7 +9,7 @@ val minestomVersion = project.property("minestom.version") as String
 val slf4jSimpleVersion: String = project.property("slf4j_simple.version") as String
 
 group = "me.zaksen.quasar"
-version = "0.1"
+version = "0.1.1"
 
 repositories {
     mavenCentral()

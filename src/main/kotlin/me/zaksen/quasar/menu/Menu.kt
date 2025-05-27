@@ -29,14 +29,12 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
 
     override fun setElement(index: Int, element: GuiElement) {
         val pos = indexToPos(index)
-        if(checkOverlaps(pos.first, pos.second, element)) throw IllegalArgumentException("New element overlap other one")
         element.x = pos.first
         element.y = pos.second
         subElements.add(element)
     }
 
     override fun setElement(x: Int, y: Int, element: GuiElement) {
-        if(checkOverlaps(x, y, element)) throw IllegalArgumentException("New element overlap other one")
         element.x = x
         element.y = y
         subElements.add(element)
@@ -44,7 +42,6 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
     }
 
     override fun addElement(element: GuiElement) {
-        if(checkOverlaps(element.x, element.y, element)) throw IllegalArgumentException("New element overlap other one")
         subElements.add(element)
         element.preInit(this)
     }
@@ -117,7 +114,6 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
     protected fun getElementByPos(x: Int, y: Int): GuiElement? {
         subElements.forEach {
             val endPos = Pair(it.x + it.width, it.y + it.height)
-
             if(x >= it.x && x <= endPos.first && y >= it.y && y <= endPos.second) {
                 return it
             }
@@ -125,54 +121,10 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
         return null
     }
 
-    /**
-     * @return true if new element overlap other sub element
-     */
-    protected fun checkOverlaps(x: Int, y: Int, element: GuiElement): Boolean {
-        val endPos = Pair(x + (element.width - 1), y + (element.height - 1))
-
-        if(endPos.first >= type.gridSize.first || endPos.second >= type.gridSize.second) {
-            return true
-        }
-
-        subElements.forEach {
-            val subEndPos = Pair(it.x + it.width, it.y + it.height)
-
-            // Check start x overlaps
-            if(x >= it.x && x <= subEndPos.first) {
-                return true
-            }
-
-            // Check start y overlaps
-            if(y >= it.y && y <= subEndPos.second) {
-                return true
-            }
-
-            // Check end x overlaps
-            if(endPos.first >= subEndPos.first && endPos.first <= subEndPos.first) {
-                return true
-            }
-
-            // Check end y overlaps
-            if(endPos.second >= subEndPos.second && endPos.second <= subEndPos.second) {
-                return true
-            }
-        }
-
-        return false
-    }
-
     /** @return Pair with position from index (x as first, y as second) */
-    @Throws(IllegalArgumentException::class)
     fun indexToPos(index: Int): Pair<Int, Int> {
-        val maxIndex = (type.gridSize.first * type.gridSize.second) - 1
-
-        if(index > maxIndex) {
-            throw IllegalArgumentException("Index should be in range (0, ${maxIndex})")
-        }
-
-        val y = index % type.gridSize.first
-        val x = index - (type.gridSize.first * y)
+        val y: Int = index / type.gridSize.first
+        val x: Int = index - (type.gridSize.first * y)
         return Pair(x, y)
     }
 }

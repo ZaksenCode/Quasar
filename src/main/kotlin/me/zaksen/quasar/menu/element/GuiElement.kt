@@ -27,16 +27,9 @@ interface GuiElement {
 
     // Utilities
     /** @return Pair with position from index (x as first, y as second) */
-    @Throws(IllegalArgumentException::class)
     fun indexToPos(index: Int): Pair<Int, Int> {
-        val maxIndex = (width * height) - 1
-
-        if(index > maxIndex) {
-            throw IllegalArgumentException("Index should be in range (0, ${maxIndex})")
-        }
-
-        val y = index % width
-        val x = index - (width * y)
+        val y: Int = index / width
+        val x: Int = index - (width * y)
         return Pair(x, y)
     }
 }
