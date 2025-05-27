@@ -24,7 +24,7 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
     override fun processClick(event: InventoryPreClickEvent) {
         val pos = indexToPos(event.slot)
         val element = getElementByPos(pos.first, pos.second)
-        element?.onClick(event)
+        element?.onClick(this, event)
     }
 
     override fun setElement(index: Int, element: GuiElement) {
@@ -71,7 +71,7 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
         if(MenuController.holdMenu(this, player)) {
             viewers.add(player)
             player.openInventory(inventory)
-            subElements.forEach { it.initFor(player) }
+            subElements.forEach { it.initFor(this, player) }
         }
         update()
     }
@@ -79,12 +79,12 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
     override fun update(special: GuiElement?) {
         if(special != null) {
             val layout = layoutFor(special)
-            special.rebuildDisplay(layout)
+            special.rebuildDisplay(this, layout)
             layout.setup(inventory)
         } else {
             subElements.forEach {
                 val layout = layoutFor(it)
-                it.rebuildDisplay(layout)
+                it.rebuildDisplay(this, layout)
                 layout.setup(inventory)
             }
         }

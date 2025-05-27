@@ -1,5 +1,6 @@
 package me.zaksen.quasar.menu.element
 
+import me.zaksen.quasar.menu.MenuStructure
 import me.zaksen.quasar.menu.display.Layout
 import net.minestom.server.event.inventory.InventoryPreClickEvent
 import net.minestom.server.item.ItemStack
@@ -18,11 +19,11 @@ class StackElement(
     override val width: Int = 1
     override val height: Int = 1
 
-    override fun onClick(event: InventoryPreClickEvent) {
+    override fun onClick(menu: MenuStructure, event: InventoryPreClickEvent) {
         onClick.accept(event)
     }
 
-    override fun rebuildDisplay(layout: Layout) {
+    override fun rebuildDisplay(menu: MenuStructure, layout: Layout) {
         layout.set(0, stack)
     }
 }

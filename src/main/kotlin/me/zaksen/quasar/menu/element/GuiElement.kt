@@ -18,12 +18,12 @@ interface GuiElement {
     /** Will be processed when added to menu */
     fun preInit(menu: MenuStructure) {}
     /** Will be processed when all elements should initialize (when menu was open) */
-    fun initFor(player: Player) {}
+    fun initFor(menu: MenuStructure, player: Player) {}
     /** Will be processed when viewer want to do click */
-    fun onClick(event: InventoryPreClickEvent) {}
+    fun onClick(menu: MenuStructure, event: InventoryPreClickEvent) {}
 
     /** Will be processed when menu need to build display for this element */
-    fun rebuildDisplay(layout: Layout)
+    fun rebuildDisplay(menu: MenuStructure, layout: Layout)
 
     // Utilities
     /** @return Pair with position from index (x as first, y as second) */
