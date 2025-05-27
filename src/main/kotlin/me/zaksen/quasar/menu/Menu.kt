@@ -129,9 +129,9 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
      * @return true if new element overlap other sub element
      */
     protected fun checkOverlaps(x: Int, y: Int, element: GuiElement): Boolean {
-        val endPos = Pair(x + element.width, y + element.height)
+        val endPos = Pair(x + (element.width - 1), y + (element.height - 1))
 
-        if(endPos.first >= type.gridSize.first  || endPos.second >= type.gridSize.second) {
+        if(endPos.first >= type.gridSize.first || endPos.second >= type.gridSize.second) {
             return true
         }
 
