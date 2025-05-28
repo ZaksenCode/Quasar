@@ -34,4 +34,7 @@ interface MenuStructure {
 
     /** Update menu title */
     fun setTitle(title: Component)
+
+    /** @return MenuType of this menu */
+    fun getType(): MenuType
 }

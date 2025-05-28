@@ -13,7 +13,7 @@ import net.minestom.server.inventory.Inventory
 import net.minestom.server.item.ItemStack
 import java.util.function.Consumer
 
-open class Menu(val type: MenuType, private val allowClose: Boolean = true): MenuStructure {
+open class Menu(private val type: MenuType, private val allowClose: Boolean = true): MenuStructure {
 
     constructor(width: Int, height: Int, allowClose: Boolean = true) : this(MenuType.bySize(width, height), allowClose)
 
@@ -104,6 +104,10 @@ open class Menu(val type: MenuType, private val allowClose: Boolean = true): Men
 
     override fun setTitle(title: Component) {
         inventory.title = title
+    }
+
+    override fun getType(): MenuType {
+        return type
     }
 
     protected fun layoutFor(element: GuiElement): Layout {
