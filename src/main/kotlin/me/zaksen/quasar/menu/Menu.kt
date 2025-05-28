@@ -113,7 +113,7 @@ open class Menu(private val type: MenuType, private val allowClose: Boolean = tr
     /** @return Element that exists on this position, null if element didn't exist */
     protected fun getElementByPos(x: Int, y: Int): GuiElement? {
         subElements.forEach {
-            val endPos = Pair(it.x + it.width, it.y + it.height)
+            val endPos = Pair(it.x + (it.width - 1), it.y + (it.height - 1))
             if(x >= it.x && x <= endPos.first && y >= it.y && y <= endPos.second) {
                 return it
             }

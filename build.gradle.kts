@@ -5,11 +5,11 @@ plugins {
     id("maven-publish")
 }
 
-val minestomVersion = project.property("minestom.version") as String
-val slf4jSimpleVersion: String = project.property("slf4j_simple.version") as String
+val minestomVersion = property("minestom_version") as String
+val slf4jSimpleVersion = property("slf4j_simple_version") as String
 
 group = "me.zaksen.quasar"
-version = "0.1.1"
+version = property("version") as String
 
 repositories {
     mavenCentral()
@@ -38,7 +38,7 @@ kotlin {
 
 //publishing {
 //    repositories {
-//        maven(project.property("publishing.url") as String) {
+//        maven(project.property("publishing_url") as String) {
 //            name = "GitHubPackages"
 //            credentials {
 //                username = (project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")) as String
@@ -48,7 +48,7 @@ kotlin {
 //    }
 //    publications {
 //        register<MavenPublication>("gpr") {
-//            artifactId = project.property("publishing.id") as String
+//            artifactId = project.property("publishing_id") as String
 //            version = project.version as String
 //            from(components["java"])
 //        }
